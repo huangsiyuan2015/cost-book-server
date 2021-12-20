@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>upload img</title>
+</head>
+
+<body>
+  <input type="file" id="upload" />
+  <script>
+    const input = document.querySelector('#upload')
+    input.addEventListener('change', (event) => {
+      // 取到上传的 file 对象
+      const file = input.files[0]
+
+      const formData = new FormData()
+      formData.append('file', file)
+      console.log('formData', formData)
+
+      fetch('http://localhost:7001/api/upload', {
+        method: 'POST',
+        body: formData
+      }).then(async res => {
+        if (res.ok) {
+          console.log('success')
+          console.log(await res.json())
+        } else {
+          console.log('error')
+        }
+      })
+    })
+  </script>
+</body>
+
+</html>
